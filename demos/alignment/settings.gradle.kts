@@ -14,4 +14,4 @@ pluginManagement {
 }
 
 rootProject.name = "alignment"
-include("app", "list", "utilities")
+include("app", "list", "utilities", "platform")

@@ -10,4 +10,5 @@ plugins {
 
 dependencies {
     api(project(":list"))
+    api(platform(project(":platform")))
 }

@@ -7,3 +7,7 @@
 plugins {
     id("org.example.java-library-conventions")
 }
+
+dependencies {
+    api(platform(project(":platform")))
+}
