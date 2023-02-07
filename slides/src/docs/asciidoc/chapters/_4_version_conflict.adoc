@@ -1,0 +1,106 @@
+[background-color="#02303a"]
+== Dealing with version conflict
+image::gradle/bg-6.png[background, size=cover]
+
+&#x2694;
+
+=== What is a version conflict?
+image::gradle/bg-6.png[background, size=cover]
+
+* Multiple paths to dependency
+** Disagree on version
+* Optimistic upgrade strategy
+** Highest version that satisfies all
+
+=== Some examples
+image::gradle/bg-6.png[background, size=cover]
+
+* [red]#`1.0.0`# and [red]#`1.0.5`# => [red]#`1.0.5`#
+* [red]#`1.0.0`# and [red]#`2.0.0`# => [red]#`2.0.0`#
+* [red]#`[1.0, 2.0[`# and [red]#`1.5`# => [red]#`1.5`#
+* [red]#`1.5`# and [red]#`[2.0, 3.0[`# => latest [red]#`2.x`# available
+* [red]#`[1.0, 2.0[`# and [red]#`[3.0, 4.0[`# => latest [red]#`3.x`# available
+
+=== Understanding why a version was selected
+image::gradle/bg-6.png[background, size=cover]
+
+* Dependency insight report
+** Variant selection information
+** Selection reasons
+** All paths to a dependency
+
+`./gradlew :app:dependencyInsight --configuration compileClasspath --dependency guava`
+
+=== And what about downgrading?
+image::gradle/bg-6.png[background, size=cover]
+
+* Use `strictly`
+** Overrules versions lower in graph
+* Is published
+** Visible for consumers
+
+[source, kotlin]
+----
+dependencies {
+    implementation("org.guava:guava") {
+        version {
+            strictly("19")
+        }
+    }
+    implememation("org.eclipse.collections:eclipse-collections:10.4.0!!")
+}
+----
+
+=== Grokking downgrading
+image::gradle/bg-6.png[background, size=cover]
+
+include::../fragments/_diagram_strictly.adoc[]
+
+=== Impact on consumer
+image::gradle/bg-6.png[background, size=cover]
+
+include::../fragments/_diagram_consume_strictly.adoc[]
+
+=== Cross module version conflict
+image::gradle/bg-6.png[background, size=cover]
+
+What is the common point between the following libraries?
+
+* `com.fasterxml.jackson*`
+* `org.springframework:spring-*`
+* `org.springframework.boot:spring-boot-*`
+* and many others
+
+=== Dependencies group
+image::gradle/bg-6.png[background, size=cover]
+
+* Set of dependencies sharing a version
+* Designed to work when using a single version.
+
+In short, you want alignment of versions across dependencies.
+
+=== Aligning dependencies
+image::gradle/bg-6.png[background, size=cover]
+
+* Group of dependencies to align
+* Platform listing them
+* Upgrade of one triggers upgrade of all
+
+=== Alignment with published platform
+image::gradle/bg-6.png[background, size=cover]
+
+* Dependencies of the group depend on the platform
+
+include::../fragments/_diagram_align.adoc[]
+
+[background-color="#02303a"]
+=== Demo
+image::gradle/bg-6.png[background, size=cover]
+
+[.notes]
+--
+* Show project
+* Add platform
+* Link platform both directions
+* Show published metadata
+--

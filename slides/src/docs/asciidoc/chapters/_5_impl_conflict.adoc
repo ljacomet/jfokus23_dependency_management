@@ -1,0 +1,103 @@
+[background-color="#02303a"]
+== Dealing with implementation conflict
+image::gradle/bg-11.png[background, size=cover]
+
+&#x1F6E0;
+
+=== Logging use case
+image::gradle/bg-11.png[background, size=cover]
+
+[source, shell]
+----
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:.../slf4j-log4j12-1.7.29.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:.../logback-classic-1.2.3.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+----
+
+[transition=slide-in fade-out]
+=== Many options ...
+image::gradle/bg-11.png[background, size=cover]
+
+image::logging-landscape-base.png[width=90%]
+
+[transition=fade-in slide-out]
+=== ... broken combinations
+image::gradle/bg-11.png[background, size=cover]
+
+image::logging-landscape-conflicts.png[width=90%]
+
+=== Introducing capabilities
+image::gradle/bg-11.png[background, size=cover]
+
+* Software components can provide multiple capabilities
+* A capability can be provided by a _single module_ in a dependency graph
+* Future
+** "I need a logger implementation" instead of "I need `slf4j-simple` "
+
+=== What is a capability?
+image::gradle/bg-11.png[background, size=cover]
+
+* Capability similar to dependency coordinate:
+** A group identifier,
+** A module name,
+** A version
+* _Implicit_ capability
+** Matching its module coordinates
+
+=== Resolving capability conflicts
+image::gradle/bg-11.png[background, size=cover]
+
+* Multiple capability conflict resolutions strategies
+** Select highest version
+** Select a specific implementation
+* Configured per capability
+
+[background-color="#02303a"]
+=== Demo
+image::gradle/bg-11.png[background, size=cover]
+
+[.notes]
+--
+- Show test project with logging capabilities plugin
+- Show result of attempting to build
+- Show and explain error message
+--
+
+=== Java EE and Jakarta EE
+image::gradle/bg-11.png[background, size=cover]
+
+* Migration of the EE specifications from Oracle to Jakarta (Eclipse)
+* Weird decision for dependency management
+** Jakarta EE 8 is fully compatible with Java EE 8
+*** But modules have different coordinates
+** Jakarta EE 9 re-uses the same GAV
+*** But the package change makes them fully incompatible with Jakarta EE 8 (and Java EE 8)
+
+=== EE 8 conflict
+image::gradle/bg-11.png[background, size=cover]
+
+--
+* Jakarta EE 8 and Java EE 8
+** Different coordinates, same code
+** Perfect use case for capabilities
+--
+
+Recommendation::
+Add the capabilities, using https://plugins.gradle.org/plugin/org.gradlex.java-ecosystem-capabilities[this plugin].
+And resolve conflicts by using the Java EE 8 version
+
+=== Jakarta EE 8 & 9 conflict
+image::gradle/bg-11.png[background, size=cover]
+
+--
+* Jakarta EE 8 usage cannot be upgraded to Jakarta EE 9
+** Same dependency coordinates
+** Different package: `javax` vs. `jakarta`
+** Version conflict resolution will happily upgrade to highest version
+--
+
+Recommendation::
+Substitute all Jakarta EE 8 modules with Java EE 8 ones.
+Reject all Jakarta EE 8 versions for the Jakarta EE modules.

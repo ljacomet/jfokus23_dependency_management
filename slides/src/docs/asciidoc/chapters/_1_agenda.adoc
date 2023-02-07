@@ -1,0 +1,50 @@
+[background-color="#02303a"]
+== What are we talking about today?
+image::gradle/bg-8.png[background, size=cover]
+
+&#x1F4CB;
+
+=== A few questions ...
+image::gradle/bg-10.png[background, size=cover]
+
+[%step]
+* Who uses third party dependencies?
+* How many? 100s? 10s?
+* Who has fought with getting the right dependencies or versions in their application?
+
+[%notitle]
+=== questions 2
+image::gradle/bg-10.png[background, size=cover]
+
+* Who has seen the following at runtime?
+
+[source, shell]
+----
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:.../slf4j-log4j12-1.7.29.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:.../logback-classic-1.2.3.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+----
+
+[%notitle]
+=== questions 3
+image::gradle/bg-10.png[background, size=cover]
+
+[%step]
+* Who uses Gradle?
+* Who uses Maven?
+* Who uses both?
+
+=== Agenda
+image::gradle/bg-10.png[background, size=cover]
+
+* Dealing with dependencies
+* Version conflict
+** Downgrading a version
+** Alignment of versions
+* Implementation conflict
+** The logging use case
+** The Jakarta use case
+
+

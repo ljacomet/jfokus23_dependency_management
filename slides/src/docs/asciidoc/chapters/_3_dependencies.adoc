@@ -1,0 +1,135 @@
+[background-color="#02303a"]
+== Dealing with dependencies
+image::gradle/bg-7.png[background, size=cover]
+
+&#x1F418;
+
+=== Dependency declarations
+image::gradle/bg-7.png[background, size=cover]
+
+[.top-margin]
+[source, kotlin]
+----
+dependencies {
+    api("com.google.code.gson:gson:2.10.1")
+    implementation("org.slf4j:slf4j-api:1.7.36")
+}
+
+testing {
+    suites {
+        val test by getting(JvmTestSuite::class) {
+            dependencies {
+                implementation("org.assertj:assertj-core:3.21.0")
+            }
+        }
+    }
+}
+----
+
+=== API / Implementation separation
+image::gradle/bg-7.png[background, size=cover]
+
+* Choosing a scope for the declaration
+** `api`, `implementation`, `compileOnly`, `runtimeOnly`, ...
+* Influences _resolution_ used by tasks
+* Influences _exposition_ to consumers
+
+=== Java library configurations
+image::gradle/bg-7.png[background, size=cover]
+
+image::java-library.png[width=90%]
+
+[.top-margin]
+_"of each dependency, give me the variant required for compilation"_
+
+_"of each dependency, give me the variant required to run the application"_
+
+=== Dependency constraints
+image::gradle/bg-7.png[background, size=cover]
+
+* Influences resolution, _iff_ the dependency is present in the graph
+
+[source, kotlin]
+----
+dependencies {
+    constraints {
+        implementation("com.google.inject:guice") {
+            version {
+                strictly("[4.0, 5.0[")
+                // require("[4.0, 5.0[")
+                prefer("4.2.0")
+                reject("4.2.1")
+                // rejectAll()
+            }
+            because("Only version 4 of Guice has all DI features we need.")
+        }
+    }
+}
+----
+
+=== Constraint use cases
+image::gradle/bg-7.png[background, size=cover]
+
+* Central version declaration
+** Some https://docs.gradle.org/current/userguide/platforms.html#sub:platforms-vs-catalog[overlap] with dependency catalogs
+* Influence versions of _transitives_
+** Express an opinion
+** _Without_ adding the dependency to the graph
+
+=== Platforms
+image::gradle/bg-7.png[background, size=cover]
+
+* Models a component that provides dependency constraints
+
+[source, kotlin]
+----
+plugins {
+    `java-platform`
+}
+
+dependencies {
+    constraints {
+        api("commons-httpclient:commons-httpclient:3.1")
+        runtime("org.postgresql:postgresql:42.2.5")
+    }
+}
+----
+
+=== Combining platforms
+image::gradle/bg-7.png[background, size=cover]
+
+[source, kotlin]
+----
+javaPlatform {
+    allowDependencies()
+}
+
+dependencies {
+    api(platform("org.springframework.boot:spring-boot-dependencies:2.7.8"))
+}
+----
+
+* Includes Spring Boot platform constraints
+
+=== Keeping it under control
+image::gradle/bg-7.png[background, size=cover]
+
+* Tooling for validating dependency declarations
+** Check out the https://plugins.gradle.org/plugin/com.autonomousapps.dependency-analysis[dependency analysis plugin]
+** &#x274C; on violations
+
+[source]
+----
+Advice for <project>
+Unused dependencies which should be removed:
+  <declaration>
+
+Transitively used dependencies that should be declared directly as indicated:
+  <declaration>
+
+Existing dependencies which should be modified to be as indicated:
+  api("...") (was implementation)
+
+Dependencies which should be removed or changed to runtime-only:
+  runtimeOnly("...") (was implementation)
+----

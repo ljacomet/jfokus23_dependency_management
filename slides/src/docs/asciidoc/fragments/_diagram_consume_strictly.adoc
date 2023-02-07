@@ -1,0 +1,31 @@
+[plantuml]
+....
+@startuml
+
+!theme spacelab
+
+skinparam shadowing false
+skinparam defaultFontSize 20
+skinparam defaultFontName Helvetica
+skinparam defaultFontColor white
+skinparam usecase {
+  BackgroundColor 1ba8cb
+  BorderColor 02303a
+  ArrowColor 02303a
+}
+
+top to bottom direction
+
+"**com.google.guava:guava:22**" as (guava22)
+"**com.pany:dep4:2.3.0**" as (dep4)
+"**com.google.guava:guava:19!!**" as (guava19s)
+"**:library**" as (lib)
+"**:app**" as (app) #02303a
+
+dep4 --> guava22
+lib --> guava19s
+app --> dep4
+app --> lib
+
+@enduml
+....

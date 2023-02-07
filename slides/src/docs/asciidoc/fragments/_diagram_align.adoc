@@ -1,0 +1,32 @@
+[plantuml]
+....
+@startuml
+
+!theme spacelab
+
+skinparam shadowing false
+skinparam defaultFontSize 20
+skinparam defaultFontName Helvetica
+skinparam defaultFontColor white
+skinparam usecase {
+  BackgroundColor 1ba8cb
+  BorderColor 02303a
+  ArrowColor 02303a
+}
+
+left to right direction
+
+"**some.group:dep1:X**" as (dep1)
+"**some.group:dep2:X**" as (dep2)
+"**some.group:dep3:X**" as (dep3)
+"**some.group:platform:X**" as (bom)
+
+dep1 --> bom
+dep2 --> bom
+dep3 --> bom
+bom ..> dep1
+bom ..> dep2
+bom ..> dep3
+
+@enduml
+....
