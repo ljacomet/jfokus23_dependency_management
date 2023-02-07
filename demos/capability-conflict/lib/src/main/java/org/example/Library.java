@@ -3,8 +3,15 @@
  */
 package org.example;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Library {
+
+    private static Logger LOGGER = LoggerFactory.getLogger(Library.class);
+
     public boolean someLibraryMethod() {
+        LOGGER.info("Something is happening!");
         return true;
     }
 }

@@ -10,6 +10,7 @@
 plugins {
     // Apply the java-library plugin for API and implementation separation.
     `java-library`
+    id("dev.jacomet.logging-capabilities") version "0.10.0"
 }
 
 repositories {
@@ -23,6 +24,9 @@ dependencies {
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation("com.google.guava:guava:31.1-jre")
+    implementation("org.slf4j:slf4j-api:2.0.4")
+
+    runtimeOnly("ch.qos.logback:logback-classic:1.4.5")
 }
 
 testing {
@@ -31,6 +35,20 @@ testing {
         val test by getting(JvmTestSuite::class) {
             // Use JUnit Jupiter test framework
             useJUnitJupiter("5.9.1")
+
+            dependencies {
+                implementation("org.slf4j:slf4j-simple:2.0.4")
+            }
+        }
+    }
+}
+
+configurations {
+    testRuntimeClasspath.get().resolutionStrategy {
+        capabilitiesResolution {
+            withCapability("dev.jacomet.logging:slf4j-impl:1.0") {
+                select("org.slf4j:slf4j-simple:2.0.4")
+            }
         }
     }
 }
