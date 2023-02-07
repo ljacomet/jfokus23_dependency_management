@@ -18,6 +18,12 @@ repositories {
     mavenCentral()
 }
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(8))
+    }
+}
+
 dependencies {
     // This dependency is exported to consumers, that is to say found on their compile classpath.
     api("org.apache.commons:commons-math3:3.6.1")
@@ -25,6 +31,7 @@ dependencies {
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation("com.google.guava:guava:31.1-jre")
     implementation("org.slf4j:slf4j-api:2.0.4")
+    implementation("dev.sigstore:sigstore-java:0.3.0")
 
     runtimeOnly("ch.qos.logback:logback-classic:1.4.5")
 }
