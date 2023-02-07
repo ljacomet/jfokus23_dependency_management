@@ -1,0 +1,10 @@
+= Dependency Management? Model it!
+
+Louis Jacomet <louis@gradle.com>
+
+Slides for my https://www.jfokus.se/talks/1488[JFokus 2023] presentation
+
+== Slides and recording
+
+HTML:: link:https://ljacomet.github.io/jfokus23_dependency_management/[ljacomet.github.io/jfokus23_dependency_management]
+PDF:: link:https://github.com/ljacomet/jfokus23_dependency_management/releases/download/SLIDES/20230208_JFokus_Dependency-management-model-it.pdf[20230208_JFokus_Dependency-management-model-it.pdf]
