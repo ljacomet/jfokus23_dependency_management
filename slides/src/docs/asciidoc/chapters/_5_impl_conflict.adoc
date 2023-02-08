@@ -9,11 +9,11 @@ image::gradle/bg-11.png[background, size=cover]
 
 [source, shell]
 ----
-SLF4J: Class path contains multiple SLF4J bindings.
-SLF4J: Found binding in [jar:file:.../slf4j-log4j12-1.7.29.jar!/org/slf4j/impl/StaticLoggerBinder.class]
-SLF4J: Found binding in [jar:file:.../logback-classic-1.2.3.jar!/org/slf4j/impl/StaticLoggerBinder.class]
-SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
-SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+SLF4J: Class path contains multiple SLF4J providers.
+SLF4J: Found provider [ch.qos.logback.classic.spi.LogbackServiceProvider@27eedb64]
+SLF4J: Found provider [org.slf4j.simple.SimpleServiceProvider@64c63c79]
+SLF4J: See https://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual provider is of type [ch.qos.logback.classic.spi.LogbackServiceProvider@27eedb64]
 ----
 
 [transition=slide-in fade-out]
@@ -101,3 +101,13 @@ image::gradle/bg-11.png[background, size=cover]
 Recommendation::
 Substitute all Jakarta EE 8 modules with Java EE 8 ones.
 Reject all Jakarta EE 8 versions for the Jakarta EE modules.
+
+=== More use cases for capabilities
+image::gradle/bg-11.png[background, size=cover]
+
+* Multiple implementations
+** ASM coordinates change
+** `cglib` vs. `cglib-nodep`
+** And many more, regrouped in the https://plugins.gradle.org/plugin/org.gradlex.java-ecosystem-capabilities[`java-ecosystem-capabilities` plugin]
+* Modelling of https://docs.gradle.org/current/userguide/feature_variants.html["optional dependencies"]
+

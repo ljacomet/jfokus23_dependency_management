@@ -1,5 +1,5 @@
 [background-color="#02303a"]
-== Dealing with dependencies
+== Declaring dependencies
 image::gradle/bg-7.png[background, size=cover]
 
 &#x1F418;

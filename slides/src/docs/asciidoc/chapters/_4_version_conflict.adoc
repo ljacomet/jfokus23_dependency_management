@@ -29,7 +29,7 @@ image::gradle/bg-6.png[background, size=cover]
 ** Selection reasons
 ** All paths to a dependency
 
-`./gradlew :app:dependencyInsight --configuration compileClasspath --dependency guava`
+https://scans.gradle.com/s/sxspeyxislkss/console-log?anchor=37&page=1[`./gradlew :app:dependencyInsight --configuration runtimeClasspath --dependency value`]
 
 === And what about downgrading?
 image::gradle/bg-6.png[background, size=cover]
